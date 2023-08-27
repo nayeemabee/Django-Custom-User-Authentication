@@ -26,12 +26,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
 
 # Serializer class for Login User
-class LoginUserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = ['email','password']
-
+class LoginUserSerializer(serializers.Serializer):
 
     """extracting email and password fields explicitly bcz serializer needs to
     perform validation and authentication based on these fields.
@@ -44,14 +39,14 @@ class LoginUserSerializer(serializers.ModelSerializer):
     a user object if authentication is successful."""
     def validate(self, data):
         #data parameter refers to the dictionary that contains the input data being
-        email = data.get("eamil")
+        email = data.get("email")
         password = data.get("password")
 
         if email and password:
             # using the authenticate() method from django.contrib.auth
             user = authenticate(email=email, password=password)
             if not user:
-                raise serializers.ValidationsError('Invalid email and password')
+                raise serializers.ValidationError('Invalid email and password')
         else:
             raise serializers.ValidationError('Must have both an email and a password.')
 
