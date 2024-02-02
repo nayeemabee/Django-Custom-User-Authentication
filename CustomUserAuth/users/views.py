@@ -25,14 +25,18 @@ class LoginUserAPIView(APIView):
         serializer = LoginUserSerializer(data=request.data)    
         if serializer.is_valid():
             # extract user frpm validated data then assign a token
-            user = serializer.Validated_data['user']
+            user = serializer.validated_data['user']
             # assigning auth token for User. GET it already present or CREATE it not.
             token = Token.objects.get_or_create(user=user)
+            
+            # Extract the token from the tuple if using get_or_create
+            if isinstance(token, tuple):
+                token = token[0]
 
             # return Response({'token': token.key}, status=HTTP_200_OK)
             return Response({
                 'id':user.pk,
-                'name':user.name,
+                'username':user.username,
                 'email': user.email,
                 'token': token.key
             }, status=HTTP_200_OK)

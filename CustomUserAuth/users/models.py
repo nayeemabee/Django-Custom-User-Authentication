@@ -28,7 +28,7 @@ class User(AbstractBaseUser):
 
     # custom field that we want to define 
     email = models.EmailField(max_length=254, unique=True)
-    name= models.CharField(max_length=50)
+    username = models.CharField(max_length=50)
     dob = models.DateField(blank=True, null=True)
     mobile_number = models.CharField(max_length=12, blank=True, null=True)
     address = models.TextField()

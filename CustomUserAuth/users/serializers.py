@@ -10,14 +10,14 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'name', 'password', 'dob', 'mobile_number', 'address']
+        fields = ['email', 'username', 'password', 'dob', 'mobile_number', 'address']
 
     # function to create a user using MyUser Model.
     def create(self, validated_data):
         user = User.objects.create_user(
             email=validated_data["email"],
             password=validated_data["password"],
-            name=validated_data["name"],
+            username=validated_data["username"],
             dob=validated_data["dob"],
             mobile_number=validated_data["mobile_number"],
             address=validated_data["address"],
@@ -60,6 +60,6 @@ class UserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ['id', 'name', 'email', 'dob', 'mobile_number', 'address']
+        fields = ['id', 'username', 'email', 'dob', 'mobile_number', 'address']
 
         
